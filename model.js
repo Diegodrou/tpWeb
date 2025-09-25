@@ -9,44 +9,6 @@ function getMousePosition(canvas, evt) {
         };
     };
 
-function DnD (canvas,evt){
-    this.xi = 0;
-    this.yi = 0;
-    this.xf = 0;
-    this.yf = 0;
-    this.pressed = false;
-
-    this.maFctGérantLaPression = (evt) =>{
-        this.xi = getMousePosition(canvas,evt).x;
-        this.yi = getMousePosition(canvas,evt).y;
-        this.pressed = true;
-        console.log("xi:" + this.xi + "yi:"+this.yi);
-    }
-
-    this.maFctGérantLeDéplacement = (evt) => {
-        if (this.pressed){
-            this.xf = getMousePosition(canvas,evt).x;
-            this.yf = getMousePosition(canvas,evt).y;
-            console.log("xf:" + this.xf +"yf:" + this.yf);
-
-        }
-    }
-
-    this.maFctGérantLeRelâchement = (evt) =>{
-        this.pressed = false;
-        this.xi = 0;
-        this.yi = 0;
-        this.xf = 0;
-        this.yf = 0;
-        console.log("Relachement");
-
-    }
-
-    canvas.addEventListener('mousedown', this.maFctGérantLaPression, false);
-    canvas.addEventListener('mousemove', this.maFctGérantLeDéplacement, false);
-    canvas.addEventListener('mouseup', this.maFctGérantLeRelâchement, false);
-
-}
 
 
 
@@ -74,12 +36,48 @@ function Forme (couleur,epaisseur){
     
 }
 
+function Drawing (formes){
+    this.formes = formes;
+    
+    this.getForms = () =>{
+        return this.formes;
+    }
+    
+    this.addForm = (forme) =>{
+        this.formes.push(forme);
+    }
+}
+
 //
 function Rectangle(couleur,epaisseur,hauteur,largeur,point_haut_gauche){//point_haut_gauche = [x,y]
     Forme.call(this,couleur,epaisseur);
     this.point_haut_gauche = point_haut_gauche;
     this.hauteur = hauteur;
     this.largeur = largeur;
+
+    this.getInitX = () => {
+        return this.point_haut_gauche[0];
+    }
+
+    this.getInitY = () =>{
+        return this.point_haut_gauche[1];
+    }
+
+    this.getFinalX = () => {
+        return this.point_haut_gauche[0] + largeur;
+    }
+
+    this.getFinalY = () => {
+        return this.point_haut_gauche[1] + hauteur;
+    }
+
+    this.setHauteur = (h) =>{
+        this.hauteur = h;
+    }
+
+    this.setLargeur = (l) =>{
+        this.largeur = l;
+    }
 }
 
 Rectangle.prototype = Object.create(Forme.prototype);
@@ -90,12 +88,48 @@ function Ligne(couleur,epaisseur,p1,p2){
     this.p1 = p1;//p = [x,y]
     this.p2 = p2;
 
+    this.getInitX = () => {
+        return this.p1[0];
+    }
+
+    this.getInitY = () =>{
+        return this.p1[1];
+    }
+
+    this.getFinalX = () => {
+        return this.p2[0];
+    }
+
+    this.getFinalY = () => {
+        return this.p2[1];
+    }
+
 }
 
 Ligne.prototype = Object.create(Forme.prototype);
 Ligne.prototype.constructor = Ligne;
 
+Rectangle.prototype.paint = function(ctx) {
+//TODO Manager color
+    ctx.beginPath();
+    ctx.rect(this.getInitX(), this.getInitY(), this.getFinalX(),this.getFinalY());
+    ctx.stroke();
+};
 
+Ligne.prototype.paint = function(ctx) {
+//TODO Manager color
+    ctx.beginPath();
+    ctx.moveTo(this.getInitX(), this.getInitY());
+    ctx.lineTo(this.getFinalX(), this.getFinalY());
+    ctx.stroke();
+};
+Drawing.prototype.paint = function(ctx) {
+    //console.log(this.getForms());
+    ctx.fillStyle = '#F0F0F0'; // set canvas' background color
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    this.getForms().forEach(function (eltDuTableau) {
+    // now fill the canvas
+    eltDuTableau.paint(ctx);
+    });
+};
 
-
-let dnd = new DnD(canvas);
