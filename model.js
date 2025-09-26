@@ -36,10 +36,10 @@ function Forme (couleur,epaisseur){
     
 }
 
-function Drawing (formes){
-    this.formes = formes;
+function Drawing (){
+    this.formes = [];
     
-    this.getForms = () =>{
+    this.getForms = () => {
         return this.formes;
     }
     
@@ -78,6 +78,8 @@ function Rectangle(couleur,epaisseur,hauteur,largeur,point_haut_gauche){//point_
     this.setLargeur = (l) =>{
         this.largeur = l;
     }
+    this.getHauteur = () => this.hauteur;
+    this.getLargeur = () => this.largeur;
 }
 
 Rectangle.prototype = Object.create(Forme.prototype);
@@ -104,32 +106,18 @@ function Ligne(couleur,epaisseur,p1,p2){
         return this.p2[1];
     }
 
+    this.setP1 = (p) =>{
+        this.p1= p;
+    }
+
+    this.setP2 = (p) => {
+        this.p2 = p;
+    }
+
 }
 
 Ligne.prototype = Object.create(Forme.prototype);
 Ligne.prototype.constructor = Ligne;
 
-Rectangle.prototype.paint = function(ctx) {
-//TODO Manager color
-    ctx.beginPath();
-    ctx.rect(this.getInitX(), this.getInitY(), this.getFinalX(),this.getFinalY());
-    ctx.stroke();
-};
 
-Ligne.prototype.paint = function(ctx) {
-//TODO Manager color
-    ctx.beginPath();
-    ctx.moveTo(this.getInitX(), this.getInitY());
-    ctx.lineTo(this.getFinalX(), this.getFinalY());
-    ctx.stroke();
-};
-Drawing.prototype.paint = function(ctx) {
-    //console.log(this.getForms());
-    ctx.fillStyle = '#F0F0F0'; // set canvas' background color
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    this.getForms().forEach(function (eltDuTableau) {
-    // now fill the canvas
-    eltDuTableau.paint(ctx);
-    });
-};
 

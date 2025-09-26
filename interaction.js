@@ -13,7 +13,7 @@ function DnD (canvas,interactor){
         this.yi = getMousePosition(canvas,evt).y;
         this.pressed = true;
         if(interactor && interactor.onInteractionStart) interactor.onInteractionStart(this);
-        console.log("xi:" + this.xi + "yi:"+this.yi);
+        // console.log("xi:" + this.xi + "yi:"+this.yi);
     }
 
     this.maFctGérantLeDéplacement = (evt) => {
@@ -21,19 +21,19 @@ function DnD (canvas,interactor){
             this.xf = getMousePosition(canvas,evt).x;
             this.yf = getMousePosition(canvas,evt).y;
             if(interactor && interactor.onInteractionUpdate) interactor.onInteractionUpdate(this);
-            console.log("xf:" + this.xf +"yf:" + this.yf);
+            // console.log("xf:" + this.xf +"yf:" + this.yf);
 
         }
     }
 
     this.maFctGérantLeRelâchement = (evt) =>{
         this.pressed = false;
+        if(interactor && interactor.onInteractionEnd) interactor.onInteractionEnd(this);
         this.xi = 0;
         this.yi = 0;
         this.xf = 0;
         this.yf = 0;
-        if(interactor && interactor.onInteractionEnd) interactor.onInteractionEnd(this);
-        console.log("Relachement");
+        // console.log("Relachement");
 
     }
 
