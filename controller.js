@@ -48,8 +48,8 @@ function Pencil(ctx, drawing, canvas) {
 	this.onInteractionUpdate = (dnd) =>{
 		if (dnd.pressed){
 			if(this.currEditingMode == editingMode.rect){
-				this.currentShape.setHauteur(this.currentShape.getInitY() + dnd.yf);
-				this.currentShape.setLargeur(this.currentShape.getInitX() + dnd.xf);
+				this.currentShape.setLargeur(dnd.xf - this.currentShape.getInitX());
+            	this.currentShape.setHauteur(dnd.yf - this.currentShape.getInitY());
 			}
 			else if(this.currEditingMode == editingMode.line){
 				this.currentShape.setP2([dnd.xf, dnd.yf]);
