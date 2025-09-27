@@ -88,6 +88,8 @@ function Pencil(ctx, drawing, canvas) {
 	// Rafraîchir le canvas
 	this.drawing.paint(this.ctx);
 
+	updateShapeList(this.currentShape,this.drawing);
+
 	// Reset pour la prochaine interaction
 	this.currentShape = 0;
 	}

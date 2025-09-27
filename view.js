@@ -27,3 +27,35 @@ Drawing.prototype.paint = function(ctx) {
     eltDuTableau.paint(ctx);
     });
 };
+
+function updateShapeList(forme,drawing){
+
+  const str = `${forme.constructor.name}: ${forme.couleur}, width=${forme.epaisseur}`;
+
+  const li = document.createElement("li");
+  // text
+  const span = document.createElement("span");
+  span.textContent = str;
+
+  // button
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn btn-sm btn-outline-danger";
+  btn.innerHTML = '<span class="glyphicon glyphicon-remove-sign"></span>';
+
+  btn.addEventListener("click", () => {
+    li.remove();
+    drawing.formes = drawing.formes.filter(f => f !== forme);
+    drawing.paint(ctx);
+  });
+  
+  li.appendChild(btn);
+  li.appendChild(span);
+  
+  const shape_list = document.getElementById("shapeList");
+  shape_list.appendChild(li);
+
+
+
+
+}
