@@ -1,4 +1,4 @@
-# TP1 - BINV : Application Web de Dessin Vectoriel en JavaScript
+# TP1 : Application Web de Dessin Vectoriel en JavaScript
 
 ## Objectif du TP
 
