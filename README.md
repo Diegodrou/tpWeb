@@ -102,8 +102,6 @@ En réalisant ce TP, j’ai appris à :
 ---
 
 ## Auteur
+**Diego Droulers**
 
-**Nom :** Diego Droulers
-**TP :** WE – TP1 : Application Web de Dessin Vectoriel en JavaScript 
-**Langages utilisés :** HTML5, CSS3, JavaScript
 
